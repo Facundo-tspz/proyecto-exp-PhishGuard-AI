@@ -6,11 +6,11 @@
 
 ## 🟢 Estado Actual
 
-- **Fase:** Tanda 2 en curso — overlays persistente (acción) y alerta roja emergente (RF09)
-- **Último paso realizado:** Tercera iteración de feedback: la alerta de cuenta comprometida dejó de ser un mensaje del chat y ahora es un **overlay rojo emergente con glow** exclusivo del teléfono víctima (RF09); el bottom-sheet "Acción del atacante" **persiste y se acumula** al avanzar pasos (ya no desaparece). El chat solo contiene burbujas texto/audio.
+- **Fase:** Tanda 2 en curso — MVP publicado en GitHub (Netlify en proceso por el usuario)
+- **Último paso realizado:** Primer push a `https://github.com/Facundo-tspz/proyecto-exp-PhishGuard-AI.git` (rama `main`, 47 archivos). Incluye favicon propio (`public/favicon.png`, reemplaza el SVG de Vite). Despliegue en Netlify a cargo del usuario (Import from Git → build `npm run build` → publish `dist`).
 - **Fecha:** 2026-10-21
 - **Próximo paso sugerido:** Fase 5 — cargar los 3 escenarios restantes (Transferencias Mulas, Falso Empleo/Task, Clonación de Voz) en `scenarios.json`; después Fase 7 (reproductor de audio real).
-- **Archivos tocados:** `src/data/scenarios.json` (mensaje de alerta sin prefijo), `src/components/simulator/{ChatWindow,SplitScreen}.jsx` (OverlayPasos acumulativo).
+- **Archivos tocados:** `index.html` (favicon.png), `public/favicon.png` (renombrado desde `favicon-png.png`; eliminado `favicon.svg` de Vite).
 
 ---
 
@@ -30,6 +30,11 @@
 ---
 
 ## 📜 Historial de Sesiones
+
+### 2026-10-21 — Push inicial a GitHub + favicon propio
+- **Resumen:** Primer push del MVP al repo `Facundo-tspz/proyecto-exp-PhishGuard-AI` (rama `main`): 47 archivos, todo el avance de Tandas 0–2. Identidad git local: Facundo Paez. Favicon: `public/favicon-png.png` renombrado a `public/favicon.png`, `index.html` apunta a `type="image/png"`, eliminado el `favicon.svg` de Vite. Despliegue Netlify a cargo del usuario (config sugerida: build `npm run build`, publish `dist`, sin env vars).
+- **Verificaciones:** `npm run build` OK; `/favicon.png` responde HTTP 200 en dev.
+- **Archivos tocados:** `index.html`, `public/favicon.png`, `public/favicon.svg` (eliminado), `docs/PROGRESO.md`.
 
 ### 2026-10-21 — Iteración simulador 3: alerta como overlay y acción persistente
 - **Resumen:** Ajuste final de la tanda. (1) La alerta "¡ALERTA DE SEGURIDAD!" ya no es un bloque dentro del chat: es un **overlay rojo emergente** (borde/brillo rojo, fondo `#FFF1F1`, texto `#B91C1C`) que sube desde abajo **solo en el teléfono de la víctima** y **persiste** al avanzar — cumple RF09 con resplandor rojo. El prefijo "⚠️ ¡ALERTA DE SEGURIDAD!" se movió del mensaje al título del overlay. (2) El bottom-sheet "⚙️ Acción del atacante" ahora **se mantiene** después de pulsar Responder y se **acumula** si hubiera más acciones (contenedor `OverlayPasos` con variante acción/alerta, `pointer-events-none`, apilado con `flex-col gap-2`). (3) `ChatWindow` ahora solo renderiza burbujas `texto`/`audio` — acciones y alertas viven exclusivamente en overlays.
