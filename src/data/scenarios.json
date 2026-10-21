@@ -1,0 +1,73 @@
+{
+  "scenarios": [
+    {
+      "id": "escenario-01-otp",
+      "title": "Robo de Cuenta por Código SMS (OTP)",
+      "category": "Ingeniería Social",
+      "difficulty": "Media",
+      "description": "El atacante intenta registrar la cuenta de WhatsApp de la víctima en otro dispositivo y solicita el código de 6 dígitos con una excusa urgente.",
+      "steps": [
+        {
+          "stepId": 1,
+          "sender": "estafador",
+          "targetScreen": "victima",
+          "content": "texto",
+          "message": "Hola! Disculpá que te moleste, te mandé recién por error un código de 6 dígitos a tu SMS. ¿Me lo podés pasar por favor? Es para confirmar mi turno/cuenta.",
+          "time": "11:15 AM",
+          "explanation": {
+            "vulnerability": "Explotación de la empatía y sentido de urgencia (Ingeniería Social).",
+            "preventionTip": "Nunca compartas un código de verificación SMS de 6 dígitos con nadie; es la llave de acceso a tu cuenta."
+          }
+        },
+        {
+          "stepId": 2,
+          "sender": "victima",
+          "targetScreen": "atacante",
+          "content": "texto",
+          "message": "Hola, ah dale, bancame que me fijé en los SMS...",
+          "time": "11:15 AM",
+          "explanation": {
+            "vulnerability": "Vulnerabilidad de confianza: la víctima no sospecha porque el mensaje viene de un contacto conocido (cuenta previamente robada).",
+            "preventionTip": "Desconfiá siempre, aunque el mensaje venga de un número conocido: podían haber robado esa cuenta antes."
+          }
+        },
+        {
+          "stepId": 3,
+          "sender": "victima",
+          "targetScreen": "atacante",
+          "content": "texto",
+          "message": "Es el 482-901, ¿ese es?",
+          "time": "11:16 AM",
+          "explanation": {
+            "vulnerability": "Entrega de credencial: la víctima comparte la clave temporal de un solo uso (OTP).",
+            "preventionTip": "Ese código es la llave de tu cuenta. Nunca lo compartas, ni siquiera con alguien que dice ser tu banco."
+          }
+        },
+        {
+          "stepId": 4,
+          "sender": "estafador",
+          "targetScreen": "atacante",
+          "content": "accion",
+          "message": "Ingresa el código 482-901 en su dispositivo — WhatsApp valida y transfiere la sesión al atacante.",
+          "time": "11:16 AM",
+          "explanation": {
+            "vulnerability": "Ejecución del ataque: el servidor de WhatsApp valida el código y transfiere la sesión al dispositivo del atacante.",
+            "preventionTip": "Activá la Verificación en Dos Pasos (PIN de 6 dígitos): así un segundo factor protege tu cuenta aunque filtren el código."
+          }
+        },
+        {
+          "stepId": 5,
+          "sender": "sistema",
+          "targetScreen": "victima",
+          "content": "alerta",
+          "message": "Tu cuenta de WhatsApp ha sido vinculada en otro dispositivo. Se ha cerrado la sesión.",
+          "time": "11:16 AM",
+          "explanation": {
+            "vulnerability": "Consecuencia: la víctima pierde el control total de su cuenta y el atacante procede a pedir dinero a sus contactos.",
+            "preventionTip": "Si perdiste tu cuenta: avisá a tus contactos por llamada, denunciá y recuperá el número con tu operador."
+          }
+        }
+      ]
+    }
+  ]
+}

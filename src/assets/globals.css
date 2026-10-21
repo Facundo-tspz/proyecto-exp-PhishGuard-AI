@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  defaultTheme: "dark";
+}
+
+@theme {
+  --color-fondo: #0b0f19;
+  --color-texto-principal: #f3f4f6;
+  --color-amarillo-ciber: #facc15;
+  --color-cian-neon: #06b6d4;
+  --color-rojo-peligro: #f43f5e;
+
+  --font-titulos: "Orbitron Variable", "Share Tech Mono", sans-serif;
+  --font-cuerpo: "Inter Variable", system-ui, sans-serif;
+
+  --radius-borde: 12px;
+}
+
+:root {
+  --color-fondo: #0b0f19;
+  --color-texto-principal: #f3f4f6;
+  --color-amarillo-ciber: #facc15;
+  --color-cian-neon: #06b6d4;
+  --color-rojo-peligro: #f43f5e;
+
+  --fuente-titulos: "Orbitron Variable", "Share Tech Mono", sans-serif;
+  --fuente-cuerpo: "Inter Variable", system-ui, sans-serif;
+
+  --radio-borde: 12px;
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto-principal);
+  font-family: var(--fuente-cuerpo);
+}
+
+/* ── Hero: orbes de glow ─────────────────────────────── */
+.glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  pointer-events: none;
+}
+
+.glow-cian {
+  width: 480px;
+  height: 480px;
+  top: -140px;
+  left: -140px;
+  background: var(--color-cian-neon);
+  opacity: 0.22;
+}
+
+.glow-amarillo {
+  width: 420px;
+  height: 420px;
+  right: -160px;
+  top: 35%;
+  background: var(--color-amarillo-ciber);
+  opacity: 0.12;
+}
+
+/* ── Hero: glitch sutil del título ───────────────────── */
+@keyframes glitch {
+  0%,
+  88%,
+  100% {
+    transform: none;
+    text-shadow: none;
+  }
+  90% {
+    transform: translate(-2px, 1px) skewX(-2deg);
+    text-shadow:
+      2px 0 var(--color-cian-neon),
+      -2px 0 var(--color-rojo-peligro);
+  }
+  93% {
+    transform: translate(2px, -1px) skewX(2deg);
+    text-shadow:
+      -2px 0 var(--color-amarillo-ciber),
+      2px 0 var(--color-cian-neon);
+  }
+  96% {
+    transform: none;
+    text-shadow: none;
+  }
+}
+
+.glitch {
+  animation: glitch 5s infinite;
+}
+
+/* ── Hero: cursor parpadeante del tipeo ──────────────── */
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.caret {
+  color: var(--color-cian-neon);
+  font-weight: 300;
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* ── Visual: notificaciones pop-in en loop ───────────── */
+@keyframes notif-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.92);
+  }
+  6% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  95%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+  }
+}
+
+.notif {
+  animation: notif-in 7s infinite;
+}
+
+/* ── Visual: barras del ecualizador ──────────────────── */
+@keyframes eq-bar {
+  0%,
+  100% {
+    transform: scaleY(0.25);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq-bar 0.9s ease-in-out infinite;
+}
+
+/* ── Visual: chip IA parpadeante ─────────────────────── */
+@keyframes ia-parpadeo {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 14px 3px rgba(6, 182, 212, 0.25);
+  }
+}
+
+.ia-chip {
+  animation: ia-parpadeo 1.6s ease-in-out infinite;
+}
+
+/* ── Visual: máscara 3D giratoria ────────────────────── */
+.perspectiva {
+  perspective: 700px;
+}
+
+@keyframes mascara-girar {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.mascara-3d {
+  transform-style: preserve-3d;
+  animation: mascara-girar 6s linear infinite;
+}
+
+.face {
+  backface-visibility: hidden;
+}
+
+.face-back {
+  transform: rotateY(180deg);
+}
