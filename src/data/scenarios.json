@@ -68,6 +68,177 @@
           }
         }
       ]
+    },
+    {
+      "id": "escenario-02-soporte",
+      "title": "Falso Soporte Técnico (ANSES)",
+      "category": "Phishing / Vishing",
+      "difficulty": "Alta",
+      "description": "Un supuesto agente oficial pide instalar una app de verificación para confirmar un turno o subsidio, pero en realidad busca controlar el celular y robar claves bancarias.",
+      "steps": [
+        {
+          "stepId": 1,
+          "sender": "estafador",
+          "targetScreen": "victima",
+          "content": "texto",
+          "message": "Estimado usuario, nos comunicamos del área de Modernización/ANSES para la confirmación de su turno/subsidio. Indique si recibió la notificación.",
+          "time": "10:02 AM",
+          "explanation": {
+            "vulnerability": "Autoridad falsa: logos y tono formal de un organismo público generan credibilidad inmediata.",
+            "preventionTip": "Los organismos oficiales no te escriben por WhatsApp para trámites: verificá siempre en sus canales oficiales."
+          }
+        },
+        {
+          "stepId": 2,
+          "sender": "victima",
+          "targetScreen": "atacante",
+          "content": "texto",
+          "message": "Hola, sí, estaba esperando el turno. ¿Qué tengo que hacer?",
+          "time": "10:04 AM",
+          "explanation": {
+            "vulnerability": "Disposición a colaborar: la víctima asume que la entidad oficial la está contactando de verdad.",
+            "preventionTip": "Desconfiá de mensajes no solicitados, aunque mencionen un turno o dato que estabas esperando."
+          }
+        },
+        {
+          "stepId": 3,
+          "sender": "estafador",
+          "targetScreen": "victima",
+          "content": "texto",
+          "message": "Para validar su identidad y generar el token, ingrese al siguiente enlace y descargue la aplicación de verificación asistida: bit.ly/anses-turno",
+          "time": "10:06 AM",
+          "explanation": {
+            "vulnerability": "Enlace malicioso / troyano: se induce a instalar una app de 'verificación asistida' que entrega control remoto del celular.",
+            "preventionTip": "Nunca instales apps de control remoto (TeamViewer/AnyDesk) ni compartas pantalla porque te lo pida un supuesto soporte."
+          }
+        },
+        {
+          "stepId": 4,
+          "sender": "sistema",
+          "targetScreen": "victima",
+          "content": "alerta",
+          "message": "ACCESO NO AUTORIZADO: el atacante tomó control de la pantalla de la víctima y capturó sus credenciales bancarias.",
+          "time": "10:09 AM",
+          "explanation": {
+            "vulnerability": "Consecuencia: con acceso remoto, el atacante roba claves de home banking y transfiere fondos.",
+            "preventionTip": "Si ya instalaste la app: desconectá el celular de internet, cambiá tus claves desde otro dispositivo y denunciá."
+          }
+        }
+      ]
+    },
+    {
+      "id": "escenario-03-comprobante",
+      "title": "Transferencia Falsa / Comprobante Trucho",
+      "category": "Fraude en Comercio Electrónico",
+      "difficulty": "Media",
+      "description": "El atacante simula una transferencia errónea con un comprobante editado y exige la devolución de la diferencia, pero el dinero nunca llegó a la cuenta de la víctima.",
+      "steps": [
+        {
+          "stepId": 1,
+          "sender": "estafador",
+          "targetScreen": "victima",
+          "content": "texto",
+          "message": "¡Hola! Te pido mil disculpas, te transferí por error $150.000 en vez de $15.000 por la compra. Te adjunto el comprobante…",
+          "time": "6:40 PM",
+          "explanation": {
+            "vulnerability": "Engaño visual: comprobante de pago adulterado digitalmente para simular una transferencia que nunca existió.",
+            "preventionTip": "El comprobante no es prueba de pago: verificá el saldo en tu home banking o app antes de devolver nada."
+          }
+        },
+        {
+          "stepId": 2,
+          "sender": "estafador",
+          "targetScreen": "victima",
+          "content": "texto",
+          "message": "Por favor devuélveme la diferencia, es la plata para los remedios de mi hijo, estoy desesperado/a.",
+          "time": "6:41 PM",
+          "explanation": {
+            "vulnerability": "Presión emocional: culpa y urgencia para forzar una reacción rápida sin verificar el saldo.",
+            "preventionTip": "Ante apuros e historias emotivas, frená: la urgencia es la herramienta favorita del estafador."
+          }
+        },
+        {
+          "stepId": 3,
+          "sender": "victima",
+          "targetScreen": "atacante",
+          "content": "texto",
+          "message": "Listo, ya te transferí la diferencia de $135.000 al alias que me pasaste.",
+          "time": "6:47 PM",
+          "explanation": {
+            "vulnerability": "Perjuicio económico: la víctima transfiere dinero real creyendo que devuelve un saldo acreditado.",
+            "preventionTip": "Nunca devuelvas dinero de un movimiento que no ves en tu cuenta; ante la duda, contactá a tu banco."
+          }
+        },
+        {
+          "stepId": 4,
+          "sender": "sistema",
+          "targetScreen": "victima",
+          "content": "alerta",
+          "message": "VERIFICACIÓN FALLIDA: el saldo de la cuenta nunca se incrementó. El comprobante era falso y el dinero transferido ya no se puede recuperar.",
+          "time": "6:48 PM",
+          "explanation": {
+            "vulnerability": "Consecuencia: la acreditación era inexistente y la devolución fue dinero real de la víctima.",
+            "preventionTip": "Si caíste: denunciá de inmediato en tu banco y en la fiscalía, y guardá capturas de la conversación."
+          }
+        }
+      ]
+    },
+    {
+      "id": "escenario-04-voz-ia",
+      "title": "Clonación de Voz con IA",
+      "category": "Deepfake / IA",
+      "difficulty": "Alta",
+      "description": "Con unos segundos de audio público, el atacante clona la voz de un familiar y la usa para pedir una transferencia urgente.",
+      "steps": [
+        {
+          "stepId": 1,
+          "sender": "estafador",
+          "targetScreen": "atacante",
+          "content": "accion",
+          "message": "Carga un audio de 5 segundos de las redes de la víctima en el motor de clonación de voz.",
+          "time": "9:05 PM",
+          "explanation": {
+            "vulnerability": "Extracción de patrón de voz: unos segundos de audio público alcanzan para replicar el timbre de un familiar.",
+            "preventionTip": "Revisá la privacidad de tus redes: los audios y videos públicos son materia prima para la IA."
+          }
+        },
+        {
+          "stepId": 2,
+          "sender": "estafador",
+          "targetScreen": "victima",
+          "content": "audio",
+          "message": "Hola ma, tuve un problema tremendo con el auto en la ruta, necesito que me transfieras a este alias ya porque no tengo señal para el home banking…",
+          "time": "9:06 PM",
+          "explanation": {
+            "vulnerability": "Suplantación biométrica: la voz clonada anula la desconfianza y activa la respuesta emocional.",
+            "preventionTip": "Ante un audio de urgencia de un familiar, cortá y llamalo directamente; acordá una palabra clave familiar."
+          }
+        },
+        {
+          "stepId": 3,
+          "sender": "victima",
+          "targetScreen": "atacante",
+          "content": "texto",
+          "message": "¡Hijo! ¿Estás bien? Decime a qué alias te transfiero ya mismo.",
+          "time": "9:07 PM",
+          "explanation": {
+            "vulnerability": "Efecto de pánico: el vínculo afectivo bloquea el pensamiento crítico y las verificaciones de seguridad.",
+            "preventionTip": "Ninguna urgencia justifica transferir sin verificar por otro canal (llamada, videollamada u otra persona)."
+          }
+        },
+        {
+          "stepId": 4,
+          "sender": "sistema",
+          "targetScreen": "victima",
+          "content": "alerta",
+          "message": "ALERTA DE SEGURIDAD IA: el audio que recibiste fue sintetizado con Inteligencia Artificial. El dinero transferido va a una cuenta mula.",
+          "time": "9:07 PM",
+          "explanation": {
+            "vulnerability": "Consecuencia: el audio fue generado por IA y la transferencia termina en una cuenta mula.",
+            "preventionTip": "Denunciá, avisá a tus contactos, reportá el número y guardá el audio como prueba."
+          }
+        }
+      ]
     }
   ]
 }

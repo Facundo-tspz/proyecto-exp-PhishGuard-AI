@@ -6,11 +6,11 @@
 
 ## 🟢 Estado Actual
 
-- **Fase:** Tanda 2 en curso — MVP publicado en GitHub (Netlify en proceso por el usuario)
-- **Último paso realizado:** Primer push a `https://github.com/Facundo-tspz/proyecto-exp-PhishGuard-AI.git` (rama `main`, 47 archivos). Incluye favicon propio (`public/favicon.png`, reemplaza el SVG de Vite). Despliegue en Netlify a cargo del usuario (Import from Git → build `npm run build` → publish `dist`).
-- **Fecha:** 2026-10-21
-- **Próximo paso sugerido:** Fase 5 — cargar los 3 escenarios restantes (Transferencias Mulas, Falso Empleo/Task, Clonación de Voz) en `scenarios.json`; después Fase 7 (reproductor de audio real).
-- **Archivos tocados:** `index.html` (favicon.png), `public/favicon.png` (renombrado desde `favicon-png.png`; eliminado `favicon.svg` de Vite).
+- **Fase:** Fase 5 completada — 4 escenarios cargados en `scenarios.json` (MVP desplegado)
+- **Último paso realizado:** Se cargaron los 3 escenarios restantes del doc 08: **Falso Soporte Técnico (ANSES)**, **Transferencia Falsa / Comprobante Trucho** y **Clonación de Voz con IA**. El menú ya los lista de forma data-driven (4 tarjetas). Total: 17 pasos simulados.
+- **Fecha:** 2026-10-22
+- **Próximo paso sugerido:** Fase 7 — reproductor de audio real con onda animada (audioUrl en el paso 2 de Voz IA cuando existan los audios); Fase 8 — assets (`public/audio/` con ElevenLabs, imagen del comprobante trucho, avatares); luego Fase 9/10 (pruebas y despliegue final).
+- **Archivos tocados:** `src/data/scenarios.json`.
 
 ---
 
@@ -20,7 +20,7 @@
 - [x] **Fase 2:** Tokens de marca en `src/assets/globals.css` (colores, tipografías Orbitron/Inter según `IDENTIDAD-MARCA.md`) y config de Tailwind/DaisyUI.
 - [x] **Fase 3:** Hero + Navbar + secciones desplegables (RF01–RF04). *(Sin navbar — decisión de diseño; ver doc 06 y slim bar en Tanda 2.)*
 - [x] **Fase 4:** Estructura del simulador: SplitScreen (Atacante/Víctima) + controles de pasos `[< Anterior] [Pausa] [Siguiente >]` (RF05–RF07).
-- [ ] **Fase 5:** `src/data/scenarios.json` completo con los 4 escenarios del guión (doc `08-ESTRUCTURA-PASO-A-PASO.md`, claves en inglés según doc `05`).
+- [x] **Fase 5:** `src/data/scenarios.json` completo con los 4 escenarios del guión (doc `08-ESTRUCTURA-PASO-A-PASO.md`, claves en inglés según doc `05`).
 - [x] **Fase 6:** Tarjeta explicativa pedagógica (RF08) + alerta "¡Cuenta Comprometida!" con resplandor rojo (RF09). *(RF08 implementada como overlay animado tras cada paso; RF09 como `alert-error` con glow en ambos teléfonos — evaluar overlay dedicado pulido si hace falta.)*
 - [ ] **Fase 7:** Módulo de audio voz IA: reproductor con onda animada para audios precargados (RF10).
 - [ ] **Fase 8:** Assets: audios clonados con ElevenLabs en `public/audio/`, imagen del comprobante trucho, avatares en `public/img/`.
@@ -30,6 +30,31 @@
 ---
 
 ## 📜 Historial de Sesiones
+
+### 2026-10-22 — Fase 5: los 4 escenarios completos (17 pasos)
+- **Resumen:** Cargados en `src/data/scenarios.json` los escenarios 2, 3 y 4 del doc 08, con claves en inglés y textos en español:
+  - **02 — Falso Soporte Técnico (ANSES)** (4 pasos): autoridad falsa → respuesta de la víctima → enlace malicioso / app de control remoto → alerta de acceso no autorizado.
+  - **03 — Transferencia Falsa / Comprobante Trucho** (4 pasos): comprobante adulterado → presión emocional → devolución real de la víctima → alerta "verificación fallida".
+  - **04 — Clonación de Voz con IA** (4 pasos): `accion` del atacante (clonado con 5 s de audio) → nota de voz `audio` suplantando al familiar → respuesta en pánico → alerta de audio sintetizado.
+- **Decisiones:** todas las alertas usan `targetScreen: "victima"` (consistencia con la UX ya validada: el overlay rojo es una consecuencia del sistema sobre la víctima, no tiene sentido en el teléfono del atacante, aunque el doc 08 diga "ambas"). El paso del comprobante queda como `texto` (menciona el adjunto) hasta que exista la imagen en Fase 8; la nota de voz usa la burbuja placeholder actual hasta el reproductor real de Fase 7; sin `audioUrl` para no referenciar archivos inexistentes.
+- **Verificaciones:** JSON parsea OK (4 escenarios / 17 pasos), `npm run lint` OK, `npm run build` OK, dev server HTTP 200.
+- **Archivos tocados:** `src/data/scenarios.json`.
+
+### 2026-10-21 — Home inicia con desplegables cerrados
+- **Resumen:** Al recargar, la home abría el acordeón "¿Qué tan común es?" por defecto (estado inicial heredado de la Tanda 1: `useState(1)` → `new Set([1])`). Se cambió el estado inicial de `abiertas` a `new Set()` y también los resets del tour (activación y paso hero) para que cada vuelta empiece limpia; el primer paso del recorrido sigue abriendo ese acordeón.
+- **Verificaciones:** `npm run lint` OK, `npm run build` OK, dev server HTTP 200.
+- **Archivos tocados:** `src/components/hero/Desplegables.jsx`.
+
+### 2026-10-21 — Demo guiada: hero en cada loop + fluidez (apertura acumulativa)
+- **Resumen:** Correcciones pedidas tras probar la demo. (1) **Hero en cada vuelta:** el índice de la secuencia ahora envuelve a `0` (antes saltaba a `1`), y el paso hero resetea el estado a los 1200 ms del scroll al tope (con las secciones ya fuera de pantalla). (2) **Fluidez:** el tirón era la suma de cierre+apertura de acordeones (cambio de altura sobre el destino durante el scroll) y dos scrolls/animaciones encimados. Solución: durante el tour los desplegables se abren de forma **acumulativa** — estado `abiertas` como `Set`, tour hace `add`, modo manual sigue exclusivo (`new Set([id])`); se hace **un único** `scrollIntoView` a los 450 ms (contenido asentado). El `toggle` ignora eventos `onToggle` que confirman el estado ya aplicado (programáticos) para que la apertura acumulativa no se degrade a exclusiva.
+- **Verificaciones:** `npm run lint` OK, `npm run build` OK, dev server HTTP 200.
+- **Archivos tocados:** `src/components/hero/Desplegables.jsx`, `docs/06-DISENO-UI.md`.
+
+### 2026-10-21 — Demo guiada automática en la home (botón flotante)
+- **Resumen:** Pedido del usuario para la expo: un botón flotante que automatice la muestra de la home. Implementado `TourGuiado.jsx` (pill `fixed right-4 bottom-6 z-50`, glow cian, alterna ▶ Demo guiada / ⏹ Detener). Secuencia (`SECUENCIA_TOUR`): hero 5 s → desplegable 1 (4.5 s) → desplegable 2 (5.5 s) → desplegable 3 (3.5 s) → escenarios OTP / Soporte / Transferencia / Voz IA (7 s c/u) → pausa 1.5 s y loop a los desplegables (el hero solo se muestra una vez por activación). Cada paso abre la sección y la centra con `scrollIntoView({ block: 'center', behavior: 'smooth' })` (o `auto` si `prefers-reduced-motion`). Tocar cualquier `<summary>` o tarjeta detiene el tour (cancelación vía `onClick` en summary, porque los cambios programáticos de `open` disparan `onToggle`). Timeouts con cleanup en cada paso.
+- **Decisiones:** estado `expandido` elevado de `EscenariosTipos` a `Desplegables` para control central; loop infinito (pedido del usuario) hasta detener; al volver al desplegable 3 se resetea `expandido` para repetir la secuencia de tarjetas limpia.
+- **Verificaciones:** `npm run lint` OK, `npm run build` OK, dev server HTTP 200.
+- **Archivos tocados:** `src/components/hero/TourGuiado.jsx` (nuevo), `src/components/hero/Desplegables.jsx` (estado elevado, secuencia, efecto con timers, botón), `docs/06-DISENO-UI.md`.
 
 ### 2026-10-21 — Push inicial a GitHub + favicon propio
 - **Resumen:** Primer push del MVP al repo `Facundo-tspz/proyecto-exp-PhishGuard-AI` (rama `main`): 47 archivos, todo el avance de Tandas 0–2. Identidad git local: Facundo Paez. Favicon: `public/favicon-png.png` renombrado a `public/favicon.png`, `index.html` apunta a `type="image/png"`, eliminado el `favicon.svg` de Vite. Despliegue Netlify a cargo del usuario (config sugerida: build `npm run build`, publish `dist`, sin env vars).

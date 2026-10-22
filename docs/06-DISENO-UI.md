@@ -18,10 +18,11 @@ El diseño de la aplicación combina el modo oscuro (*dark mode*) de alta gama c
   - Subtítulo descriptivo enfocado en la concientización para la expo.
   - Fondo carbón con orbes de glow radiales en cian y amarillo (CSS, sin assets).
   - Botón principal de llamada a la acción (CTA): `[ Iniciar Simulación ]` en Cian Neón (`#06B6D4`) con scroll suave hacia las secciones desplegables.
-- **Secciones Desplegables (Acordeón):** Desplegables con `<details>/<summary>` (abren y cierran al tocar de nuevo; solo una abierta a la vez).
+- **Secciones Desplegables (Acordeón):** Desplegables con `<details>/<summary>` (abren y cierran al tocar de nuevo; solo una abierta a la vez en modo manual). La página **inicia con todas cerradas**.
   - **Card 1: "¿Qué tan común es?"** — Texto de riesgo + animación de un teléfono recibiendo notificaciones de estafas en loop.
   - **Card 2: "Estadísticas Clave"** — 3 métricas centradas con números que se cuentan al abrir + gráfico donut SVG animado (fuentes citables pendientes).
   - **Card 3: "Tipos de Estafas"** — Tarjetas **cliqueables** de los 4 escenarios: al tocar, la tarjeta **se expande en su lugar** (con animación de layout) y las otras 3 pasan a mini-tarjetas al costado. El panel expandido muestra la animación propia del escenario (teléfono OTP / máscara 3D Guy Fawkes giratoria / comprobante con saldo a $0 / ecualizador IA), la explicación del engaño y el consejo de prevención. Botón "✕ Volver" para colapsar al grid 2×2.
+- **Botón flotante "Demo guiada"** (`fixed` abajo a la derecha, glow cian): automatiza la interacción para la expo. Al activarse: muestra el hero 5 s → baja y abre los 3 desplegables uno por uno, centrando cada uno en pantalla → expande las 4 tarjetas de escenario en secuencia → pausa y repite en **loop, empezando cada vuelta con el hero**. Durante la demo los desplegables se abren de forma **acumulativa** (1 → 1+2 → 1+2+3) para evitar saltos de layout; al volver al hero se resetea a solo el primero (fuera de pantalla). El modo manual sigue siendo exclusivo (una sección a la vez). Cualquier interacción manual cancela el recorrido. Respeta `prefers-reduced-motion`.
 
 ### B. Vista Simulador: Modo Split-Screen (Doble Pantalla)
 Disposición horizontal dividida en dos columnas principales sobre pantallas medianas y grandes:
