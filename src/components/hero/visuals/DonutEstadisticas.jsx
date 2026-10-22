@@ -1,13 +1,26 @@
 import { motion } from 'framer-motion'
 
 const SEGMENTOS = [
-  { color: 'var(--color-cian-neon)', pct: 45, label: 'Ingeniería social' },
-  { color: 'var(--color-amarillo-ciber)', pct: 35, label: 'Phishing / enlaces' },
-  { color: 'var(--color-rojo-peligro)', pct: 20, label: 'Vishing / voz IA' },
+  {
+    color: 'var(--color-rojo-peligro)',
+    pct: 84.2,
+    label: 'Acceso ilegítimo + fraude',
+  },
+  {
+    color: 'var(--color-amarillo-ciber)',
+    pct: 15.8,
+    label: 'Solo acceso ilegítimo',
+  },
 ]
 
 const R = 54
 const C = 2 * Math.PI * R
+
+const fmtPct = (n) =>
+  n.toLocaleString('es-AR', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  })
 
 const SEGMENTOS_CON_OFFSET = SEGMENTOS.map((seg, i) => {
   const pctAntes = SEGMENTOS.slice(0, i).reduce((s, x) => s + x.pct, 0)
@@ -20,9 +33,14 @@ const SEGMENTOS_CON_OFFSET = SEGMENTOS.map((seg, i) => {
 
 export default function DonutEstadisticas() {
   return (
-    <div className="flex flex-col items-center gap-3">
+    <figure className="flex flex-col items-center gap-3">
       <div className="relative">
-        <svg viewBox="0 0 140 140" className="h-40 w-40 -rotate-90">
+        <svg
+          viewBox="0 0 140 140"
+          className="h-40 w-40 -rotate-90"
+          role="img"
+          aria-label="Donut: 84,2% de los reportes de WhatsApp terminó en fraude y 15,8% fue solo acceso ilegítimo."
+        >
           <circle
             cx="70"
             cy="70"
@@ -40,7 +58,7 @@ export default function DonutEstadisticas() {
               fill="none"
               stroke={seg.color}
               strokeWidth="14"
-              strokeLinecap="round"
+              strokeLinecap="butt"
               strokeDasharray={`${seg.largo} ${C}`}
               transform={`rotate(${seg.inicioDeg} 70 70)`}
               initial={{ strokeDashoffset: C }}
@@ -51,10 +69,10 @@ export default function DonutEstadisticas() {
         </svg>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
           <span className="font-titulos text-lg font-bold text-texto-principal">
-            100%
+            84,2%
           </span>
           <span className="font-cuerpo text-[10px] text-texto-principal/60">
-            cibercrimen
+            con fraude
           </span>
         </div>
       </div>
@@ -70,10 +88,24 @@ export default function DonutEstadisticas() {
               className="inline-block h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: seg.color }}
             />
-            {seg.label}
+            {seg.label} · {fmtPct(seg.pct)}%
           </li>
         ))}
       </ul>
-    </div>
+
+      <figcaption className="max-w-xs text-center font-cuerpo text-xs leading-relaxed text-texto-principal/65">
+        5.509 reportes de WhatsApp (2024): 4.637 usurpaciones con fraude + 872
+        accesos ilegítimos. Fuente:{' '}
+        <a
+          href="https://www.mpf.gob.ar/ufeci/files/2025/06/UFECI_informe_anual_2024-1.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cian-neon hover:underline"
+        >
+          UFECI 2024
+        </a>
+        .
+      </figcaption>
+    </figure>
   )
 }

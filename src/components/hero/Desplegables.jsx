@@ -9,22 +9,28 @@ import EqualizadorIA from './visuals/EqualizadorIA.jsx'
 
 const ESTADISTICAS = [
   {
-    hasta: 89,
-    sufijo: '%',
-    texto: 'de los ciberataques exitosos comienzan con ingeniería social.',
-    fuente: 'TODO: citar fuente',
+    hasta: 34468,
+    sufijo: '',
+    texto:
+      'denuncias por delitos informáticos en Argentina en 2024: 21,1% más que en 2023.',
+    fuente: 'UFECI 2024 · PDF',
+    url: 'https://www.mpf.gob.ar/ufeci/files/2025/06/UFECI_informe_anual_2024-1.pdf',
   },
   {
-    hasta: 6,
-    sufijo: ' de 10',
-    texto: 'estafas digitales ocurren en apps de mensajería como WhatsApp.',
-    fuente: 'TODO: citar fuente',
+    hasta: 5509,
+    sufijo: '',
+    texto:
+      'reportes vinculados a WhatsApp en 2024: 872 accesos ilegítimos y 4.637 usurpaciones de identidad con fraude.',
+    fuente: 'UFECI 2024 · PDF',
+    url: 'https://www.mpf.gob.ar/ufeci/files/2025/06/UFECI_informe_anual_2024-1.pdf',
   },
   {
     hasta: 3,
-    sufijo: ' seg',
-    texto: 'de audio publicado en redes alcanzan para clonar una voz con IA.',
-    fuente: 'TODO: citar fuente',
+    sufijo: ' s',
+    texto:
+      'de audio de referencia bastaron para que el modelo VALL-E imite una voz en laboratorio (2023).',
+    fuente: 'VALL-E 2023 · arXiv',
+    url: 'https://arxiv.org/abs/2301.02111',
   },
 ]
 
@@ -384,11 +390,7 @@ export default function Desplegables() {
         onInteraccion={() => setTourActivo(false)}
         titulo="Estadísticas Clave"
       >
-        <div className="alert alert-warning mb-6 border-amarillo-ciber/40 bg-amarillo-ciber/10 py-2 font-cuerpo text-sm text-amarillo-ciber">
-          Cifras de ejemplo — reemplazar con fuentes verificables antes de la
-          expo.
-        </div>
-        <ul className="mb-8 grid gap-6 text-center sm:grid-cols-3">
+        <ul className="mb-4 grid gap-6 text-center sm:grid-cols-3">
           {ESTADISTICAS.map((stat) => (
             <li key={stat.texto} className="flex flex-col items-center gap-2">
               <span className="font-titulos text-3xl font-bold text-cian-neon sm:text-4xl">
@@ -397,12 +399,23 @@ export default function Desplegables() {
               <span className="max-w-[16rem] font-cuerpo text-sm text-texto-principal/85">
                 {stat.texto}
               </span>
-              <span className="badge badge-outline badge-warning badge-sm">
+              <a
+                href={stat.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Fuente: ${stat.fuente} (se abre en una pestaña nueva)`}
+                className="badge badge-outline badge-sm border-cian-neon/40 text-cian-neon transition-colors hover:border-cian-neon hover:bg-cian-neon/10"
+              >
                 {stat.fuente}
-              </span>
+              </a>
             </li>
           ))}
         </ul>
+        <p className="mx-auto mb-8 max-w-2xl text-center font-cuerpo text-xs leading-relaxed text-texto-principal/55">
+          Denuncias registradas ante la UFECI (último informe anual publicado:
+          2024). No equivalen al total de hechos ocurridos: muchas víctimas no
+          denuncian.
+        </p>
         {abiertas.has(2) && <DonutEstadisticas />}
       </Collapse>
 

@@ -19,6 +19,7 @@ Dado que la aplicación se utilizará en un entorno de exposición presencial (s
 | **TC03** | Retroceso de Flujo | Presión del botón `[Paso Anterior]` en medio de un escenario. | La interfaz retrocede al estado y mensaje exacto del paso anterior sin perder el orden. | Pendiente |
 | **TC04** | Alerta de Pérdida | Llegada al paso final de secuestro de cuenta en el Escenario 1. | El marco de la víctima se ilumina en rojo (`#F43F5E`) y se despliega la pancarta de alerta de seguridad. | Pendiente |
 | **TC05** | Módulo de Audio / IA | Reproducción de nota de voz clonada en el Escenario 4. | El reproductor activa la onda animada y emite el audio sin latencia notable; la transcripción queda visible. Si el archivo no carga, aparece "Reintentar" y al hacer clic reproduce. | Pendiente |
+| **TC06** | Hero / Estadísticas | Apertura del desplegable "Estadísticas Clave" y revisión de métricas, fuentes y donut. | Se ven 3 métricas con su fuente enlazada (UFECI 2024 / VALL-E 2023), no aparece la alerta de cifras de ejemplo y el donut muestra 84,2% / 15,8%. | Pendiente |
 
 ---
 

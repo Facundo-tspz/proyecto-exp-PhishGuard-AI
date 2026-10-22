@@ -6,11 +6,11 @@
 
 ## 🟢 Estado Actual
 
-- **Fase:** Reproductor de voz real en el escenario 4 — Fase 7 completada
-- **Último paso realizado:** La nota de voz clonada ya es un audio real (`esc04-nota-voz-madre.mp3`, MP3 mono 44.1 kHz, 12,9 s, normalizado a −16 LUFS) con reproductor (play/pausa, onda animada, progreso, duración) y **transcripción siempre visible** debajo de la burbuja. El audio ahora dice "al alias que te voy a pasar" y el alias va en un **mensaje aparte**; el escenario 4 pasó a 5 pasos. Si el archivo no carga (por ejemplo, por una pestaña vieja o caché), el reproductor muestra **Reintentar** y recarga el audio con cache-busting.
+- **Fase:** Hero / Estadísticas Clave con fuentes reales — RF03 completado (Fase 3 ya cerrada)
+- **Último paso realizado:** Se reemplazaron las cifras de ejemplo del desplegable "Estadísticas Clave" por datos verificables: **34.468** denuncias por delitos informáticos en Argentina en 2024 (+21,1%), **5.509** reportes vinculados a WhatsApp (872 accesos ilegítimos + 4.637 usurpaciones con fraude) y **3 s** de audio de referencia para imitar una voz con VALL-E (2023). Los badges ahora enlazan a UFECI y arXiv; se eliminaron la alerta amarilla y los `TODO`. El donut muestra **84,2%** de reportes de WhatsApp con fraude vs. **15,8%** solo acceso ilegítimo.
 - **Fecha:** 2026-10-22
-- **Próximo paso sugerido:** Probar el escenario 4 con `Ctrl + F5` en `localhost:5173` (si aparece "Reintentar", hacer clic); sección de voces de famosos (en pausa hasta conseguir los clips); completar Fase 8 (avatares y, si se define, galería); prueba manual de reproducción (TC05) en la notebook de la expo; luego Fase 9/10.
-- **Archivos tocados:** `src/components/common/ReproductorAudio.jsx` (nuevo), `src/components/simulator/ChatWindow.jsx`, `src/components/simulator/SplitScreen.jsx`, `src/components/simulator/Simulacion.jsx`, `src/data/scenarios.json`, `public/audio/esc04-nota-voz-madre.mp3`, `docs/02-REQUERIMIENTOS.md`, `docs/06-DISENO-UI.md`, `docs/08-ESTRUCTURA-PASO-A-PASO.md`, `docs/09-PLAN-DE-PRUEBAS.md`, `docs/10-DESPLIEGUE-Y-MANTENIMIENTO.md`.
+- **Próximo paso sugerido:** Revisar TC06 (estadísticas y fuentes) y TC05 (audio del escenario 4) en la notebook de la expo; completar Fase 8 (avatares y, si se define, galería); la sección de voces de famosos sigue en pausa hasta conseguir los clips; luego Fase 9/10.
+- **Archivos tocados:** `src/components/hero/Desplegables.jsx`, `src/components/hero/visuals/DonutEstadisticas.jsx`, `docs/06-DISENO-UI.md`, `docs/09-PLAN-DE-PRUEBAS.md`, `docs/PROGRESO.md`.
 
 ---
 
@@ -24,12 +24,19 @@
 - [x] **Fase 6:** Tarjeta explicativa pedagógica (RF08) + alerta "¡Cuenta Comprometida!" con resplandor rojo (RF09). *(RF08 implementada como overlay animado tras cada paso; RF09 como `alert-error` con glow en ambos teléfonos — evaluar overlay dedicado pulido si hace falta.)*
 - [x] **Fase 7:** Módulo de audio voz IA: reproductor con onda animada para audios precargados (RF10). *(`ReproductorAudio` compartido; nota de voz real del escenario 4 + transcripción.)*
 - [ ] **Fase 8:** Assets: avatares en `public/img/` y clips para la futura galería de voces. *(El comprobante trucho se resuelve como componente data-driven y la nota de voz del escenario 4 ya está grabada.)*
-- [ ] **Fase 9:** Ejecución manual del plan de pruebas (doc `09`, TC01–TC05 + casos límite) en la notebook del stand.
+- [ ] **Fase 9:** Ejecución manual del plan de pruebas (doc `09`, TC01–TC06 + casos límite) en la notebook del stand.
 - [ ] **Fase 10:** Despliegue Vercel/Netlify + checklist pre-expo (doc `10`).
 
 ---
 
 ## 📜 Historial de Sesiones
+
+### 2026-10-22 — Estadísticas Clave con fuentes reales
+- **Resumen:** Se reemplazaron las tres cifras de ejemplo del Hero (89%, 6 de 10, 3 seg) por datos verificables y se eliminaron la alerta amarilla y los badges `TODO`. Las métricas ahora son **34.468** denuncias por delitos informáticos en Argentina en 2024 (+21,1% vs. 2023), **5.509** reportes vinculados a WhatsApp en 2024 (872 accesos ilegítimos + 4.637 usurpaciones de identidad con fraude) y **3 s** de audio de referencia para que VALL-E imite una voz en laboratorio. Los badges de fuente ahora son enlaces a UFECI (PDF) y arXiv.
+- **Donut:** pasó de segmentos inventados a los datos de WhatsApp de UFECI 2024: **84,2%** acceso ilegítimo + fraude vs. **15,8%** solo acceso; centro "84,2% / con fraude" y caption con el total de 5.509 reportes y el enlace a la fuente.
+- **Decisiones:** se usa UFECI 2024 porque es el último informe anual publicado en su web y permite mantener una misma fuente para el total y el desglose de WhatsApp. La primera métrica dice "delitos informáticos" (no "estafas") para no ampliar el alcance del dato. Se agregó la aclaración de que las denuncias registradas no equivalen al total de hechos. El enlace externo es opcional: si no hay internet, el nombre de la fuente sigue visible.
+- **Verificaciones:** `npm run lint` OK, `npm run build` OK, dev server HTTP 200; enlaces de UFECI y arXiv HTTP 200; `grep` sin `TODO: citar fuente` ni "Cifras de ejemplo" en `src/` y `docs/06`. **Pendiente:** revisión visual manual del desplegable y del donut (TC06).
+- **Archivos tocados:** `src/components/hero/Desplegables.jsx`, `src/components/hero/visuals/DonutEstadisticas.jsx`, `docs/06-DISENO-UI.md`, `docs/09-PLAN-DE-PRUEBAS.md`, `docs/PROGRESO.md`.
 
 ### 2026-10-22 — Reproductor: reintento ante "No disponible"
 - **Resumen:** El usuario reportó "audio no disponible" al reproducir el escenario 4. Se verificó el mismo audio en dev y en producción (`vite preview`), en Edge headless: carga con `readyState 4`, reproduce y la transcripción se muestra. La causa más probable es una pestaña vieja apuntando a un servidor detenido/caché de una respuesta fallida. Para que el reproductor no quede bloqueado, el error ahora permite **Reintentar**: el botón de play se habilita y recarga el audio con un parámetro cache-busting (`?r=timestamp`).
