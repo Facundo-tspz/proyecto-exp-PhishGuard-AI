@@ -86,8 +86,8 @@ Todo el contenido de los chats vive en `src/data/scenarios.json` (ver `docs/05-D
 
 ### Cómo agregar un audio de voz clonada
 1. Generar el audio con ElevenLabs (u otra herramienta) a partir de una muestra corta.
-2. Guardarlo en `public/audio/` con un nombre descriptivo (ej. `esc04-nota-voz-madre.mp3`).
-3. Referenciarlo desde el paso correspondiente del JSON mediante la clave `audioUrl`.
+2. Guardarlo en `public/audio/` con un nombre descriptivo (ej. `esc04-nota-voz-madre.m4a` o `.mp3`).
+3. Referenciarlo desde el paso correspondiente del JSON mediante la clave `audioUrl`. El texto de `message` se muestra como transcripción debajo de la burbuja.
 
 ### Actualización de dependencias
 ```bash

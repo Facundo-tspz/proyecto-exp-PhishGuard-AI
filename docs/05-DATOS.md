@@ -22,10 +22,11 @@ Cada **Escenario** (`scenario`) dentro del simulador consta de las siguientes pr
 - **`stepId`** *(number)*: Número secuencial de ejecución.
 - **`sender`** *(string)*: Quién envía la acción (`"estafador"` | `"victima"` | `"sistema"`).
 - **`targetScreen`** *(string)*: Pantalla donde impacta el mensaje (`"atacante"` | `"victima"` | `"ambas"`).
-- **`content`** *(string)*: Naturaleza del mensaje (`"texto"` | `"audio"` | `"imagen"` | `"alerta"`).
+- **`content`** *(string)*: Naturaleza del mensaje (`"texto"` | `"audio"` | `"imagen"` | `"accion"` | `"alerta"`).
 - **`message`** *(string)*: Texto del chat o transcripción del audio.
 - **`time`** *(string)*: Timestamp simulado (ej. `"10:42 AM"`).
 - **`audioUrl`** *(string, opcional)*: Ruta al archivo de audio en `/public/audio/` para mensajes de voz o síntesis.
+- **`image`** *(object, opcional)*: Datos del comprobante visual cuando `content` es `"imagen"`: `monto`, `destino`, `fecha`, `hora` y `operacion` (todos strings). Se renderiza como tarjeta genérica dentro de la burbuja, sin assets externos.
 - **`explanation`** *(object)*:
   - **`vulnerability`** *(string)*: Concepto de ciberseguridad explotado.
   - **`preventionTip`** *(string)*: Recomendación pedagógica para no caer en el engaño.

@@ -141,16 +141,35 @@
           "message": "¡Hola! Te pido mil disculpas, te transferí por error $150.000 en vez de $15.000 por la compra. Te adjunto el comprobante…",
           "time": "6:40 PM",
           "explanation": {
-            "vulnerability": "Engaño visual: comprobante de pago adulterado digitalmente para simular una transferencia que nunca existió.",
-            "preventionTip": "El comprobante no es prueba de pago: verificá el saldo en tu home banking o app antes de devolver nada."
+            "vulnerability": "Falsa transferencia: el atacante afirma haber enviado dinero de más para generar una deuda inexistente.",
+            "preventionTip": "Ante un supuesto error de transferencia, verificá el saldo real en tu cuenta antes de devolver nada."
           }
         },
         {
           "stepId": 2,
           "sender": "estafador",
           "targetScreen": "victima",
+          "content": "imagen",
+          "message": "Comprobante de transferencia",
+          "time": "6:40 PM",
+          "image": {
+            "monto": "$150.000",
+            "destino": "juan.perez.mp",
+            "fecha": "22/10/2026",
+            "hora": "18:40",
+            "operacion": "0012-8845"
+          },
+          "explanation": {
+            "vulnerability": "Engaño visual: comprobante de pago adulterado digitalmente para simular una transferencia que nunca existió.",
+            "preventionTip": "El comprobante no es prueba de pago: verificá el saldo en tu home banking o app antes de devolver nada."
+          }
+        },
+        {
+          "stepId": 3,
+          "sender": "estafador",
+          "targetScreen": "victima",
           "content": "texto",
-          "message": "Por favor devuélveme la diferencia, es la plata para los remedios de mi hijo, estoy desesperado/a.",
+          "message": "Por favor, devuélveme la diferencia. Es la plata para los remedios de mi hijo, estoy desesperada.",
           "time": "6:41 PM",
           "explanation": {
             "vulnerability": "Presión emocional: culpa y urgencia para forzar una reacción rápida sin verificar el saldo.",
@@ -158,7 +177,7 @@
           }
         },
         {
-          "stepId": 3,
+          "stepId": 4,
           "sender": "victima",
           "targetScreen": "atacante",
           "content": "texto",
@@ -170,7 +189,7 @@
           }
         },
         {
-          "stepId": 4,
+          "stepId": 5,
           "sender": "sistema",
           "targetScreen": "victima",
           "content": "alerta",
@@ -195,7 +214,7 @@
           "sender": "estafador",
           "targetScreen": "atacante",
           "content": "accion",
-          "message": "Carga un audio de 5 segundos de las redes de la víctima en el motor de clonación de voz.",
+          "message": "Carga un audio de 5 segundos de las redes de un familiar de la víctima en el motor de clonación de voz.",
           "time": "9:05 PM",
           "explanation": {
             "vulnerability": "Extracción de patrón de voz: unos segundos de audio público alcanzan para replicar el timbre de un familiar.",
@@ -207,8 +226,9 @@
           "sender": "estafador",
           "targetScreen": "victima",
           "content": "audio",
-          "message": "Hola ma, tuve un problema tremendo con el auto en la ruta, necesito que me transfieras a este alias ya porque no tengo señal para el home banking…",
+          "message": "Hola, ma. Tuve un problema con el auto en la ruta mientras viajaba y me quedé sin señal en mi celular. Te mando este audio desde el celu de un colega. Necesito que me transfieras cincuenta mil pesos al alias que te voy a pasar. Por favor, es urgente.",
           "time": "9:06 PM",
+          "audioUrl": "/audio/esc04-nota-voz-madre.mp3",
           "explanation": {
             "vulnerability": "Suplantación biométrica: la voz clonada anula la desconfianza y activa la respuesta emocional.",
             "preventionTip": "Ante un audio de urgencia de un familiar, cortá y llamalo directamente; acordá una palabra clave familiar."
@@ -216,10 +236,22 @@
         },
         {
           "stepId": 3,
+          "sender": "estafador",
+          "targetScreen": "victima",
+          "content": "texto",
+          "message": "Te paso el alias: juan.perez.mp",
+          "time": "9:06 PM",
+          "explanation": {
+            "vulnerability": "Canal de pago: el atacante deriva la transferencia a un alias de una cuenta mula para cobrar sin dejar rastro.",
+            "preventionTip": "Antes de transferir, verificá que el titular del alias coincida con la persona. Si no coincide, no envíes nada."
+          }
+        },
+        {
+          "stepId": 4,
           "sender": "victima",
           "targetScreen": "atacante",
           "content": "texto",
-          "message": "¡Hijo! ¿Estás bien? Decime a qué alias te transfiero ya mismo.",
+          "message": "¡Hija! ¿Estás bien? Ya mismo te transfiero los $50.000 a ese alias.",
           "time": "9:07 PM",
           "explanation": {
             "vulnerability": "Efecto de pánico: el vínculo afectivo bloquea el pensamiento crítico y las verificaciones de seguridad.",
@@ -227,7 +259,7 @@
           }
         },
         {
-          "stepId": 4,
+          "stepId": 5,
           "sender": "sistema",
           "targetScreen": "victima",
           "content": "alerta",

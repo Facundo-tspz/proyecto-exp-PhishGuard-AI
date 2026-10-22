@@ -18,7 +18,7 @@
 | **RF07** | **Control de Navegación por Pasos:** Proporcionar controles (`[Paso Siguiente >]`, `[Paso Anterior]`, `[Pausar/Reproducir]`) para avanzar secuencialmente en la historia de la estafa. | Alta |
 | **RF08** | **Tarjeta Explicativa de Técnica:** Mostrar tarjetas contextuales emergentes en cada paso que expliquen la vulnerabilidad psicológica o técnica empleada por el atacante. | Media |
 | **RF09** | **Notificación de Perfeccionamiento de Estafa:** Visualizar en la pantalla de la víctima el bloqueo/desvinculación de la cuenta cuando el atacante toma el control. | Alta |
-| **RF10** | **Módulo de Voz Sintética (IA):** Reproducir dentro del Escenario 4 notas de voz clonadas precargadas en `/public/audio/` (generadas previamente con ElevenLabs), con onda animada y controles de play/pausa. Sin grabación ni APIs en runtime. | Alta |
+| **RF10** | **Módulo de Voz Sintética (IA):** Reproducir dentro del Escenario 4 notas de voz clonadas precargadas en `/public/audio/` (grabadas o generadas previamente con consentimiento), con onda animada, controles de play/pausa y transcripción visible. Sin grabación ni APIs en runtime. | Alta |
 
 ---
 

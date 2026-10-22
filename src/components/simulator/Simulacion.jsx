@@ -35,7 +35,11 @@ export default function Simulacion({ escenario, onSalir }) {
         silenciado={silenciado}
         onAlternarSonido={alternarSilencio}
       />
-      <SplitScreen sim={sim} onResponder={sim.siguiente} />
+      <SplitScreen
+        sim={sim}
+        onResponder={sim.siguiente}
+        silenciado={silenciado}
+      />
       {!sim.esperando && (
         <TarjetaExplicativa
           paso={sim.pasoActual}

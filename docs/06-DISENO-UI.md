@@ -50,7 +50,8 @@ Excepción aprobada a la paleta de marca — los teléfonos replican WhatsApp **
 - Texto `#111B21` · meta/hora `#667781` · doble check azul `#53BDEB` · botón enviar `#00A884` (ícono blanco).
 - Avatares placeholder `#DFE5E7` con ícono `#54656F`, centrados.
 - **Semántica de alineación:** en cada dispositivo, sus propios mensajes salen a la derecha (verde claro) y los recibidos entran a la izquierda (blanco). La misma conversación se refleja en ambos teléfonos con la perspectiva invertida. El marco/bezel del teléfono es oscuro (es el dispositivo, no la UI de WhatsApp). Los acentos cian/amarillo de la app quedan solo fuera de los teléfonos.
-- **Tipos de paso:** `texto`/`audio` → burbuja en ambos teléfonos; `accion` → bottom-sheet persistente solo en el atacante; `alerta` → overlay rojo persistente solo en el teléfono víctima. El chat **solo** contiene burbujas de texto/audio.
+- **Tipos de paso:** `texto`/`audio`/`imagen` → burbuja en ambos teléfonos (la imagen es un **comprobante visual compacto** generado con datos del JSON: check, monto, destino, fecha/hora y N° de operación); `accion` → bottom-sheet persistente solo en el atacante; `alerta` → overlay rojo persistente solo en el teléfono víctima. El chat contiene burbujas de texto/audio/imagen.
+- **Burbuja de audio real:** reproductor con play/pausa, onda animada mientras suena, progreso con clic para saltar y duración leída del archivo. **La transcripción se muestra siempre debajo** de la burbuja (etiqueta "Transcripción", texto legible), para que se entienda aunque haya ruido en la expo o falle el audio. Solo se reproduce un audio a la vez entre ambos teléfonos; sin auto-play. Si falta el archivo o falla, el reproductor queda deshabilitado y la transcripción sigue visible. El mute de la SlimBar también silencia la nota de voz.
 
 ---
 

@@ -117,7 +117,7 @@ function PieAtacante() {
   )
 }
 
-export default function SplitScreen({ sim, onResponder }) {
+export default function SplitScreen({ sim, onResponder, silenciado }) {
   const { visibles, esperando, pasoActual, terminado } = sim
 
   const acciones = visibles.filter(
@@ -144,6 +144,7 @@ export default function SplitScreen({ sim, onResponder }) {
           visibles={visibles}
           esperando={esperando}
           pasoActual={pasoActual}
+          silenciado={silenciado}
         />
       </Telefono>
 
@@ -165,6 +166,7 @@ export default function SplitScreen({ sim, onResponder }) {
           visibles={visibles}
           esperando={esperando}
           pasoActual={pasoActual}
+          silenciado={silenciado}
         />
       </Telefono>
     </div>

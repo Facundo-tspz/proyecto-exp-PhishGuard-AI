@@ -6,11 +6,11 @@
 
 ## 🟢 Estado Actual
 
-- **Fase:** Sonido del simulador (SFX + mute) — Fase 5 completada, MVP desplegado
-- **Último paso realizado:** Corregidos los textos del escenario 2 (ANSES): paso 1 ahora dice solo "de ANSES" y la alerta final quedó más formal ("el atacante sustrajo información personal y credenciales bancarias"). Antes se corrigió el mensaje inicial del OTP (turno médico).
+- **Fase:** Reproductor de voz real en el escenario 4 — Fase 7 completada
+- **Último paso realizado:** La nota de voz clonada ya es un audio real (`esc04-nota-voz-madre.mp3`, MP3 mono 44.1 kHz, 12,9 s, normalizado a −16 LUFS) con reproductor (play/pausa, onda animada, progreso, duración) y **transcripción siempre visible** debajo de la burbuja. El audio ahora dice "al alias que te voy a pasar" y el alias va en un **mensaje aparte**; el escenario 4 pasó a 5 pasos. Si el archivo no carga (por ejemplo, por una pestaña vieja o caché), el reproductor muestra **Reintentar** y recarga el audio con cache-busting.
 - **Fecha:** 2026-10-22
-- **Próximo paso sugerido:** Fase 7 — reproductor de audio real con onda animada (audioUrl en el paso 2 de Voz IA cuando existan los audios); Fase 8 — assets (`public/audio/` con ElevenLabs, imagen del comprobante trucho, avatares); luego Fase 9/10 (pruebas y despliegue final).
-- **Archivos tocados:** `src/data/scenarios.json`, `docs/PROGRESO.md`.
+- **Próximo paso sugerido:** Probar el escenario 4 con `Ctrl + F5` en `localhost:5173` (si aparece "Reintentar", hacer clic); sección de voces de famosos (en pausa hasta conseguir los clips); completar Fase 8 (avatares y, si se define, galería); prueba manual de reproducción (TC05) en la notebook de la expo; luego Fase 9/10.
+- **Archivos tocados:** `src/components/common/ReproductorAudio.jsx` (nuevo), `src/components/simulator/ChatWindow.jsx`, `src/components/simulator/SplitScreen.jsx`, `src/components/simulator/Simulacion.jsx`, `src/data/scenarios.json`, `public/audio/esc04-nota-voz-madre.mp3`, `docs/02-REQUERIMIENTOS.md`, `docs/06-DISENO-UI.md`, `docs/08-ESTRUCTURA-PASO-A-PASO.md`, `docs/09-PLAN-DE-PRUEBAS.md`, `docs/10-DESPLIEGUE-Y-MANTENIMIENTO.md`.
 
 ---
 
@@ -22,14 +22,33 @@
 - [x] **Fase 4:** Estructura del simulador: SplitScreen (Atacante/Víctima) + controles de pasos `[< Anterior] [Pausa] [Siguiente >]` (RF05–RF07).
 - [x] **Fase 5:** `src/data/scenarios.json` completo con los 4 escenarios del guión (doc `08-ESTRUCTURA-PASO-A-PASO.md`, claves en inglés según doc `05`).
 - [x] **Fase 6:** Tarjeta explicativa pedagógica (RF08) + alerta "¡Cuenta Comprometida!" con resplandor rojo (RF09). *(RF08 implementada como overlay animado tras cada paso; RF09 como `alert-error` con glow en ambos teléfonos — evaluar overlay dedicado pulido si hace falta.)*
-- [ ] **Fase 7:** Módulo de audio voz IA: reproductor con onda animada para audios precargados (RF10).
-- [ ] **Fase 8:** Assets: audios clonados con ElevenLabs en `public/audio/`, imagen del comprobante trucho, avatares en `public/img/`.
+- [x] **Fase 7:** Módulo de audio voz IA: reproductor con onda animada para audios precargados (RF10). *(`ReproductorAudio` compartido; nota de voz real del escenario 4 + transcripción.)*
+- [ ] **Fase 8:** Assets: avatares en `public/img/` y clips para la futura galería de voces. *(El comprobante trucho se resuelve como componente data-driven y la nota de voz del escenario 4 ya está grabada.)*
 - [ ] **Fase 9:** Ejecución manual del plan de pruebas (doc `09`, TC01–TC05 + casos límite) en la notebook del stand.
 - [ ] **Fase 10:** Despliegue Vercel/Netlify + checklist pre-expo (doc `10`).
 
 ---
 
 ## 📜 Historial de Sesiones
+
+### 2026-10-22 — Reproductor: reintento ante "No disponible"
+- **Resumen:** El usuario reportó "audio no disponible" al reproducir el escenario 4. Se verificó el mismo audio en dev y en producción (`vite preview`), en Edge headless: carga con `readyState 4`, reproduce y la transcripción se muestra. La causa más probable es una pestaña vieja apuntando a un servidor detenido/caché de una respuesta fallida. Para que el reproductor no quede bloqueado, el error ahora permite **Reintentar**: el botón de play se habilita y recarga el audio con un parámetro cache-busting (`?r=timestamp`).
+- **Verificaciones:** lint OK, build OK, preview HTTP 200/audio 200; prueba automatizada forzando un `src` inválido: aparece "Reintentar" y al hacer clic recupera el MP3 y reproduce.
+- **Pendiente:** confirmar con el usuario tras `Ctrl + F5` en `localhost:5173` y escuchar en la notebook de la expo (TC05).
+- **Archivos tocados:** `src/components/common/ReproductorAudio.jsx`, `docs/09-PLAN-DE-PRUEBAS.md`, `docs/PROGRESO.md`.
+
+### 2026-10-22 — Reproductor de voz real + transcripción (escenario 4)
+- **Resumen:** Se integró el audio grabado por la pareja del usuario. El archivo original del celular (AAC/3GP, 12,84 s) se convirtió a **MP3 mono 44.1 kHz 160 kbps**, se normalizó a −16 LUFS y se le quitaron los metadatos del dispositivo. La burbuja de audio ahora tiene reproductor funcional: play/pausa, onda animada mientras suena, progreso con clic para saltar, tiempo real y manejo de error/archivo faltante. **La transcripción queda siempre visible debajo de la burbuja** (etiqueta "Transcripción" y texto legible), pensada para la expo con ruido. El mute de la SlimBar también silencia la voz; solo suena un audio a la vez entre ambos teléfonos y no hay auto-play.
+- **Cambios de guion:** el audio dice "…al alias que te voy a pasar" (sin el alias) y un **paso nuevo** envía "Te paso el alias: juan.perez.mp"; la víctima responde "¡Hija! ¿Estás bien? Ya mismo te transfiero los $50.000 a ese alias." Se corrigió el paso 1 ("redes de **un familiar** de la víctima", antes decía "de la víctima"). El escenario 4 pasó de 4 a 5 pasos y el total a 19.
+- **Implementación:** `ReproductorAudio.jsx` en `components/common` (reutilizable para la futura galería); `ChatWindow` usa `paso.audioUrl` y muestra la transcripción; `silenciado` se pasa por `Simulacion → SplitScreen → ChatWindow`; JSON con `audioUrl` y el paso de alias con su explicación (cuenta mula).
+- **Verificaciones:** JSON parsea OK (4 escenarios / 19 pasos), `npm run lint` OK, `npm run build` OK, dev server HTTP 200 y audio HTTP 200 con `Content-Type: audio/mpeg`. **Pendiente:** escuchar la reproducción real en navegador (TC05) y confirmar volumen/tono en la notebook de la expo.
+- **Archivos tocados:** `src/components/common/ReproductorAudio.jsx` (nuevo), `src/components/simulator/ChatWindow.jsx`, `src/components/simulator/SplitScreen.jsx`, `src/components/simulator/Simulacion.jsx`, `src/data/scenarios.json`, `public/audio/esc04-nota-voz-madre.mp3`, `docs/02-REQUERIMIENTOS.md`, `docs/06-DISENO-UI.md`, `docs/08-ESTRUCTURA-PASO-A-PASO.md`, `docs/09-PLAN-DE-PRUEBAS.md`, `docs/10-DESPLIEGUE-Y-MANTENIMIENTO.md`.
+
+### 2026-10-22 — Comprobante visual + ajuste de texto en escenario 3
+- **Resumen:** (1) El mensaje de presión ahora dice "estoy desesperada" (con coma y punto agregados): "Por favor, devuélveme la diferencia. Es la plata para los remedios de mi hijo, estoy desesperada." (2) Nuevo tipo de burbuja `imagen`: el comprobante de la falsa transferencia aparece en un **paso propio** (burbuja aparte, como WhatsApp), con una tarjeta compacta data-driven — ✓ "Transferencia realizada", monto, alias destino, fecha, hora y N° de operación — sin logos ni assets externos. El escenario 3 pasó de 4 a 5 pasos (renumerados). El paso de texto conserva la explicación de "falsa transferencia" y el de imagen toma la de "engaño visual / comprobante adulterado". El sonido de entrante y el "escribiendo…" funcionan igual para imágenes.
+- **Implementación:** `ComprobanteChat.jsx` nuevo; `ChatWindow` acepta `content: "imagen"` (`visibleEn` + rama de burbuja); datos en `image: { monto, destino, fecha, hora, operacion }`; documentado el esquema en doc 05 y el tipo de burbuja en doc 06.
+- **Verificaciones:** JSON parsea OK (escenario 3 con 5 pasos), `npm run lint` OK, `npm run build` OK, dev server HTTP 200.
+- **Archivos tocados:** `src/components/simulator/ComprobanteChat.jsx` (nuevo), `src/components/simulator/ChatWindow.jsx`, `src/data/scenarios.json`, `docs/05-DATOS.md`, `docs/06-DISENO-UI.md`.
 
 ### 2026-10-22 — Ajustes de texto en escenario 2 (ANSES)
 - **Resumen:** Paso 1: se quitó "área de Modernización/" y ahora dice solo "nos comunicamos de ANSES…"; además se quitó "/subsidio" y quedó solo "confirmación de su turno". Paso 4 (alerta): mensaje más formal y conciso — "ACCESO NO AUTORIZADO: el atacante sustrajo información personal y credenciales bancarias." Sin cambios en los pasos 2 y 3 ni en las explicaciones.

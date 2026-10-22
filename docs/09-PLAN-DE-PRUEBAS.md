@@ -18,7 +18,7 @@ Dado que la aplicación se utilizará en un entorno de exposición presencial (s
 | **TC02** | Navegación de Flujo | Avance secuencial en el simulador mediante el botón `[Paso Siguiente]`. | La pantalla del receptor muestra el indicador *"Escribiendo..."* antes de renderizar el mensaje. | Pendiente |
 | **TC03** | Retroceso de Flujo | Presión del botón `[Paso Anterior]` en medio de un escenario. | La interfaz retrocede al estado y mensaje exacto del paso anterior sin perder el orden. | Pendiente |
 | **TC04** | Alerta de Pérdida | Llegada al paso final de secuestro de cuenta en el Escenario 1. | El marco de la víctima se ilumina en rojo (`#F43F5E`) y se despliega la pancarta de alerta de seguridad. | Pendiente |
-| **TC05** | Módulo de Audio / IA | Reproducción de nota de voz clonada en el Escenario 4. | El reproductor de audio activa la onda animada y emite el audio sin latencia notable. | Pendiente |
+| **TC05** | Módulo de Audio / IA | Reproducción de nota de voz clonada en el Escenario 4. | El reproductor activa la onda animada y emite el audio sin latencia notable; la transcripción queda visible. Si el archivo no carga, aparece "Reintentar" y al hacer clic reproduce. | Pendiente |
 
 ---
 

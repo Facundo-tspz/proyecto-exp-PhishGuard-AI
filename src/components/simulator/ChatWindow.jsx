@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import ComprobanteChat from './ComprobanteChat.jsx'
+import ReproductorAudio from '../common/ReproductorAudio.jsx'
 
 const FONDO_CHAT = '#EFEAE2'
 const TEXTO = '#111B21'
@@ -10,7 +12,8 @@ const esPropio = (paso, lado) =>
   (lado === 'atacante' && paso.sender === 'estafador') ||
   (lado === 'victima' && paso.sender === 'victima')
 
-const visibleEn = (p) => p.content === 'texto' || p.content === 'audio'
+const visibleEn = (p) =>
+  p.content === 'texto' || p.content === 'audio' || p.content === 'imagen'
 
 function IndicadorEscribiendo({ propio }) {
   return (
@@ -31,7 +34,7 @@ function IndicadorEscribiendo({ propio }) {
   )
 }
 
-function Burbuja({ paso, propio }) {
+function Burbuja({ paso, propio, silenciado }) {
   const { content, message, time } = paso
   const fondo = propio ? 'bg-[#D9FDD3]' : 'bg-white'
 
@@ -46,6 +49,28 @@ function Burbuja({ paso, propio }) {
     </div>
   )
 
+  if (content === 'imagen') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, x: propio ? 12 : -12, y: 6 }}
+        animate={{ opacity: 1, x: 0, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className={`chat ${propio ? 'chat-end' : 'chat-start'}`}
+      >
+        {meta}
+        <div className={`chat-bubble border border-black/5 p-1.5 ${fondo}`}>
+          <ComprobanteChat datos={paso.image} />
+        </div>
+        <div
+          className="chat-footer mt-0.5 font-cuerpo text-[10px] italic"
+          style={{ color: META }}
+        >
+          {message}
+        </div>
+      </motion.div>
+    )
+  }
+
   if (content === 'audio') {
     return (
       <motion.div
@@ -56,28 +81,24 @@ function Burbuja({ paso, propio }) {
       >
         {meta}
         <div
-          className={`chat-bubble flex items-center gap-2 border border-black/5 ${fondo}`}
+          className={`chat-bubble flex items-center border border-black/5 p-2 ${fondo}`}
           style={{ color: TEXTO }}
         >
-          <span className="text-sm" aria-hidden="true">
-            ▶
-          </span>
-          <span className="flex items-end gap-0.5" aria-hidden="true">
-            {[3, 8, 5, 11, 7, 12, 4].map((h, i) => (
-              <span
-                key={i}
-                className="w-0.5 rounded-full bg-current opacity-60"
-                style={{ height: `${h}px` }}
-              />
-            ))}
-          </span>
-          <span className="font-cuerpo text-[10px] opacity-70">0:12</span>
+          <ReproductorAudio src={paso.audioUrl} silenciado={silenciado} />
         </div>
-        <div
-          className="chat-footer mt-0.5 font-cuerpo text-[10px] italic"
-          style={{ color: META }}
-        >
-          {message}
+        <div className="chat-footer mt-1 w-full max-w-[16rem] text-left">
+          <div
+            className="font-cuerpo text-[9px] font-semibold uppercase tracking-wide"
+            style={{ color: META }}
+          >
+            Transcripción
+          </div>
+          <p
+            className="mt-0.5 font-cuerpo text-[11px] leading-snug"
+            style={{ color: '#3B4A54' }}
+          >
+            {message}
+          </p>
         </div>
       </motion.div>
     )
@@ -101,7 +122,13 @@ function Burbuja({ paso, propio }) {
   )
 }
 
-export default function ChatWindow({ visibles, esperando, pasoActual, lado }) {
+export default function ChatWindow({
+  visibles,
+  esperando,
+  pasoActual,
+  lado,
+  silenciado,
+}) {
   const contRef = useRef(null)
 
   useEffect(() => {
@@ -129,6 +156,7 @@ export default function ChatWindow({ visibles, esperando, pasoActual, lado }) {
           key={paso.stepId}
           paso={paso}
           propio={esPropio(paso, lado)}
+          silenciado={silenciado}
         />
       ))}
       {muestraEscribiendo && (
