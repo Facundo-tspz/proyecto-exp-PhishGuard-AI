@@ -32,7 +32,7 @@
 ## 📜 Historial de Sesiones
 
 ### 2026-10-22 — Ajustes de texto en escenario 2 (ANSES)
-- **Resumen:** Paso 1: se quitó "área de Modernización/" y ahora dice solo "nos comunicamos de ANSES…". Paso 4 (alerta): mensaje más formal y conciso — "ACCESO NO AUTORIZADO: el atacante sustrajo información personal y credenciales bancarias." Sin cambios en los pasos 2 y 3 ni en las explicaciones.
+- **Resumen:** Paso 1: se quitó "área de Modernización/" y ahora dice solo "nos comunicamos de ANSES…"; además se quitó "/subsidio" y quedó solo "confirmación de su turno". Paso 4 (alerta): mensaje más formal y conciso — "ACCESO NO AUTORIZADO: el atacante sustrajo información personal y credenciales bancarias." Sin cambios en los pasos 2 y 3 ni en las explicaciones.
 - **Verificaciones:** JSON parsea OK, `npm run lint` OK, `npm run build` OK.
 - **Archivos tocados:** `src/data/scenarios.json`.
 

@@ -81,7 +81,7 @@
           "sender": "estafador",
           "targetScreen": "victima",
           "content": "texto",
-          "message": "Estimado usuario, nos comunicamos de ANSES para la confirmación de su turno/subsidio. Indique si recibió la notificación.",
+          "message": "Estimado usuario, nos comunicamos de ANSES para la confirmación de su turno. Indique si recibió la notificación.",
           "time": "10:02 AM",
           "explanation": {
             "vulnerability": "Autoridad falsa: logos y tono formal de un organismo público generan credibilidad inmediata.",
