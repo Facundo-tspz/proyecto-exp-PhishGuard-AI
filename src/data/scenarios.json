@@ -12,7 +12,7 @@
           "sender": "estafador",
           "targetScreen": "victima",
           "content": "texto",
-          "message": "Hola! Disculpá que te moleste, te mandé recién por error un código de 6 dígitos a tu SMS. ¿Me lo podés pasar por favor? Es para confirmar mi turno/cuenta.",
+          "message": "Hola, disculpá que te moleste, puse mal mi número de teléfono y se envió por error un código de 6 dígitos a tu número. ¿Me lo podés pasar, por favor? Es para confirmar un turno médico.",
           "time": "11:15 AM",
           "explanation": {
             "vulnerability": "Explotación de la empatía y sentido de urgencia (Ingeniería Social).",
@@ -81,7 +81,7 @@
           "sender": "estafador",
           "targetScreen": "victima",
           "content": "texto",
-          "message": "Estimado usuario, nos comunicamos del área de Modernización/ANSES para la confirmación de su turno/subsidio. Indique si recibió la notificación.",
+          "message": "Estimado usuario, nos comunicamos de ANSES para la confirmación de su turno/subsidio. Indique si recibió la notificación.",
           "time": "10:02 AM",
           "explanation": {
             "vulnerability": "Autoridad falsa: logos y tono formal de un organismo público generan credibilidad inmediata.",
@@ -117,7 +117,7 @@
           "sender": "sistema",
           "targetScreen": "victima",
           "content": "alerta",
-          "message": "ACCESO NO AUTORIZADO: el atacante tomó control de la pantalla de la víctima y capturó sus credenciales bancarias.",
+          "message": "ACCESO NO AUTORIZADO: el atacante sustrajo información personal y credenciales bancarias.",
           "time": "10:09 AM",
           "explanation": {
             "vulnerability": "Consecuencia: con acceso remoto, el atacante roba claves de home banking y transfiere fondos.",

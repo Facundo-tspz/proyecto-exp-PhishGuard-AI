@@ -6,11 +6,11 @@
 
 ## 🟢 Estado Actual
 
-- **Fase:** Fase 5 completada — 4 escenarios cargados en `scenarios.json` (MVP desplegado)
-- **Último paso realizado:** Se cargaron los 3 escenarios restantes del doc 08: **Falso Soporte Técnico (ANSES)**, **Transferencia Falsa / Comprobante Trucho** y **Clonación de Voz con IA**. El menú ya los lista de forma data-driven (4 tarjetas). Total: 17 pasos simulados.
+- **Fase:** Sonido del simulador (SFX + mute) — Fase 5 completada, MVP desplegado
+- **Último paso realizado:** Corregidos los textos del escenario 2 (ANSES): paso 1 ahora dice solo "de ANSES" y la alerta final quedó más formal ("el atacante sustrajo información personal y credenciales bancarias"). Antes se corrigió el mensaje inicial del OTP (turno médico).
 - **Fecha:** 2026-10-22
 - **Próximo paso sugerido:** Fase 7 — reproductor de audio real con onda animada (audioUrl en el paso 2 de Voz IA cuando existan los audios); Fase 8 — assets (`public/audio/` con ElevenLabs, imagen del comprobante trucho, avatares); luego Fase 9/10 (pruebas y despliegue final).
-- **Archivos tocados:** `src/data/scenarios.json`.
+- **Archivos tocados:** `src/data/scenarios.json`, `docs/PROGRESO.md`.
 
 ---
 
@@ -30,6 +30,22 @@
 ---
 
 ## 📜 Historial de Sesiones
+
+### 2026-10-22 — Ajustes de texto en escenario 2 (ANSES)
+- **Resumen:** Paso 1: se quitó "área de Modernización/" y ahora dice solo "nos comunicamos de ANSES…". Paso 4 (alerta): mensaje más formal y conciso — "ACCESO NO AUTORIZADO: el atacante sustrajo información personal y credenciales bancarias." Sin cambios en los pasos 2 y 3 ni en las explicaciones.
+- **Verificaciones:** JSON parsea OK, `npm run lint` OK, `npm run build` OK.
+- **Archivos tocados:** `src/data/scenarios.json`.
+
+### 2026-10-22 — Corrección del mensaje inicial del escenario OTP
+- **Resumen:** Texto del paso 1 (`escenario-01-otp`) reescrito a pedido del usuario y revisado en ortografía/voseo: "Hola, disculpá que te moleste, puse mal mi número de teléfono y se envió por error un código de 6 dígitos a tu número. ¿Me lo podés pasar, por favor? Es para confirmar un turno médico." Sin cambios en los demás pasos ni en la explicación pedagógica.
+- **Verificaciones:** JSON parsea OK, `npm run lint` OK, `npm run build` OK.
+- **Archivos tocados:** `src/data/scenarios.json`.
+
+### 2026-10-22 — Sonido del simulador (SFX royalty-free + mute)
+- **Resumen:** Efectos de sonido en la simulación, 100% offline. Assets descargados de Mixkit (licencia libre, sin atribución obligatoria; créditos en `public/audio/sfx/LICENSE.txt`): `entrante.mp3` ("Message pop alert"), `saliente.mp3` ("Fast small sweep transition"), `alerta.mp3` ("Double beep tone alert") y `accion.mp3` ("Interface option select"). Hook `useSfx` con caché a nivel de módulo (precarga con `preload='auto'`, volúmenes 0.3–0.45, `play().catch()` silencioso si falla) y mute persistido en `localStorage`. En `Simulacion`, un efecto reproduce **al revelarse el paso** (después del "escribiendo…" de 900 ms): entrante para mensajes del estafador, saliente para la víctima, alerta para el overlay rojo y accion para el bottom-sheet. Un sonido por paso, solo al avanzar (`ultimoSonado` evita duplicados y retrocesos); la carga inicial y `‹ Anterior`/`↺ Reiniciar` no suenan. Botón 🔇/🔊 con `aria-pressed` en la SlimBar.
+- **Decisiones:** sonido por evento revelado (no por clic); mute en SlimBar y persistente para la expo; primer lint con warning `react(immutability)` por mutar `audio.currentTime` de un objeto guardado en un ref → se pasó a caché de módulo.
+- **Verificaciones:** `npm run lint` OK (0 warnings), `npm run build` OK, dev server HTTP 200 y los 4 mp3 responden HTTP 200 (13–51 KB).
+- **Archivos tocados:** `src/hooks/useSfx.js` (nuevo), `src/components/simulator/Simulacion.jsx` (effect de sonido), `src/components/simulator/SlimBar.jsx` (botón mute), `public/audio/sfx/{entrante,saliente,alerta,accion}.mp3`, `public/audio/sfx/LICENSE.txt`, `docs/06-DISENO-UI.md`.
 
 ### 2026-10-22 — Fase 5: los 4 escenarios completos (17 pasos)
 - **Resumen:** Cargados en `src/data/scenarios.json` los escenarios 2, 3 y 4 del doc 08, con claves en inglés y textos en español:

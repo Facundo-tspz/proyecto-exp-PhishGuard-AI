@@ -61,6 +61,7 @@ Excepción aprobada a la paleta de marca — los teléfonos replican WhatsApp **
   - Ambos dispositivos muestran la conversación completa, con la perspectiva invertida.
 - **Composer "Responder":** placeholder + botón de texto + flecha circular verde estilo WhatsApp que impulsa el avance de pasos.
 - **Controles discretos:** `‹ Anterior` / `↺ Reiniciar` como botones fantasma (`btn-ghost`) pequeños, con indicador `Paso N / M` centrado — no compiten con el composer.
+- **Sonidos de simulación (offline):** 4 SFX royalty-free precargados en `public/audio/sfx/` (`entrante`, `saliente`, `alerta`, `accion`; licencia en `LICENSE.txt`). Suenan **cuando la burbuja/overlay aparece**, una vez por paso y solo al avanzar: entrante → mensajes del estafador; saliente → respuestas de la víctima; alerta → overlay rojo; accion → bottom-sheet del atacante. `‹ Anterior`, `↺ Reiniciar` y la carga inicial no disparan sonido. Botón **🔊/🔇** en la SlimBar junto a "Volver al menú", con estado persistido en `localStorage` (`phishguard-sfx-mute`). Volumen bajo (0.3–0.45) para el stand.
 - **Alertas de Sistema (`alert-warning` / `alert-error`):**
   - Contenedores destacados para notificaciones de secuestro de cuenta o fallos de seguridad.
 
